@@ -1,2 +1,2 @@
-require('core')
-require('rocket24h')
+require("core")
+require("rocket24h")

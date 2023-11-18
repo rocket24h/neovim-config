@@ -36,12 +36,14 @@ require("lazy").setup({
 		"nvim-tree/nvim-tree.lua",
 		lazy = false,
 		dependencies = { "nvim-tree/nvim-web-devicons" },
-		--config = function()
-		--end,
+		config = function()
+			require("nvim-tree").setup({})
+		end,
 	},
 	{
 		"nvim-telescope/telescope.nvim",
 		dependencies = {
+			"nvim-treesitter/nvim-treesitter",
 			"sharkdp/fd",
 			"nvim-lua/plenary.nvim",
 			{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },

@@ -17,6 +17,10 @@ mason.setup({
 
 mason_lspconfig.setup({
 	ensure_installed = {
+		"tailwindcss",
+		"cssls",
+		"html",
+		"dockerls",
 		"tsserver",
 		"lua_ls",
 		"pyright",
