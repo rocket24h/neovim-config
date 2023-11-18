@@ -41,6 +41,14 @@ require("lazy").setup({
 		end,
 	},
 	{
+		"nvim-treesitter/nvim-treesitter",
+		build = ":TSUpdate",
+		event = { "BufReadPre", "BufNewFile" },
+		config = function()
+			require("config.nvim-treesitter")
+		end,
+	},
+	{
 		"nvim-telescope/telescope.nvim",
 		dependencies = {
 			"nvim-treesitter/nvim-treesitter",
@@ -69,11 +77,12 @@ require("lazy").setup({
 	{
 		"mcchrish/zenbones.nvim",
 		dependencies = { "rktjmp/lush.nvim" },
-		priority = 1000,
+		-- priority = 1000,
 		config = function()
 			require("config.zenbones")
 		end,
 	},
+	{ "EdenEast/nightfox.nvim" },
 	{
 		"folke/which-key.nvim",
 		event = "VeryLazy",
