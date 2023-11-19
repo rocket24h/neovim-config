@@ -16,7 +16,7 @@ require("lazy").setup({
 	{ "goolord/alpha-nvim", dependencies = { "nvim-tree/nvim-web-devicons" } },
 	{
 		"neovim/nvim-lspconfig",
-		dependencies = { "hrsh7th/cmp-nvim-lsp" },
+		dependencies = { "hrsh7th/cmp-nvim-lsp", { "antosha417/nvim-lsp-file-operations", config = true } },
 		event = { "BufReadPre", "BufNewFile" },
 		config = function()
 			require("config.lsp.nvim-lspconfig")
@@ -62,8 +62,10 @@ require("lazy").setup({
 	},
 	{
 		"hrsh7th/nvim-cmp",
+		event = "InsertEnter",
 		dependencies = {
 			"hrsh7th/cmp-buffer",
+			"hrsh7th/cmp-nvim-lsp",
 			"hrsh7th/cmp-path",
 			"L3MON4D3/LuaSnip",
 			"saadparwaiz1/cmp_luasnip",
