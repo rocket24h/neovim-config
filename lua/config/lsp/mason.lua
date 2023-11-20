@@ -25,6 +25,7 @@ mason_lspconfig.setup({
 		"lua_ls",
 		"pyright",
 		"clangd",
+		"vimls",
 	},
 
 	automatic_installation = true,

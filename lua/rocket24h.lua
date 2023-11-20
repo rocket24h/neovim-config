@@ -15,6 +15,46 @@ require("lazy").setup({
 	-- Load necessary plugins
 	{ "goolord/alpha-nvim", dependencies = { "nvim-tree/nvim-web-devicons" } },
 	{
+		"akinsho/toggleterm.nvim",
+		config = function()
+			require("toggleterm").setup({
+				size = 15,
+				shell = "powershell",
+				direction = "float",
+				open_mapping = [[<c-\>]],
+				shade_filetypes = {},
+				shading_factor = 2,
+				persist_size = true,
+				hide_numbers = true,
+				close_on_exit = true,
+				shade_terminals = true,
+				start_in_insert = true,
+				insert_mappings = true,
+				float_opts = {
+					winblend = 0,
+					border = "single",
+				},
+			})
+		end,
+	},
+	{
+		"akinsho/bufferline.nvim",
+		config = function()
+			require("bufferline")
+		end,
+	},
+	{
+		"nvim-lualine/lualine.nvim",
+		event = { "VeryLazy" },
+	},
+	{
+		"windwp/nvim-autopairs",
+		event = "InsertEnter",
+		config = function()
+			require("config.nvim-autopairs")
+		end,
+	},
+	{
 		"neovim/nvim-lspconfig",
 		dependencies = { "hrsh7th/cmp-nvim-lsp", { "antosha417/nvim-lsp-file-operations", config = true } },
 		event = { "BufReadPre", "BufNewFile" },

@@ -47,7 +47,8 @@ local on_attach = function(client, bufnr)
 end
 
 -- used to enable autocompletion (assign to every lsp server config)
-local capabilities = cmp_nvim_lsp.default_capabilities(vim.lsp.protocol.make_client_capabilities())
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities = cmp_nvim_lsp.default_capabilities(capabilities)
 
 -- Change the Diagnostic symbols in the sign column (gutter)
 -- (not in youtube nvim video)
@@ -56,6 +57,17 @@ for type, icon in pairs(signs) do
 	local hl = "DiagnosticSign" .. type
 	vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
 end
+
+-- configure vim server
+lspconfig["vimls"].setup({
+	enable = true,
+	autocomplete = true,
+	source = {
+		nvim_command = true,
+	},
+	capabilities = capabilities,
+	on_attach = on_attach,
+})
 
 -- configure html server
 lspconfig["html"].setup({
@@ -123,6 +135,13 @@ lspconfig["pyright"].setup({
 	capabilities = capabilities,
 	on_attach = on_attach,
 	filetypes = { "python" },
+})
+
+-- configure c/c++ server
+lspconfig["clangd"].setup({
+	capabilities = capabilities,
+	on_attach = on_attach,
+	filetypes = { "c", "cpp" },
 })
 
 -- configure lua server (with special settings)
