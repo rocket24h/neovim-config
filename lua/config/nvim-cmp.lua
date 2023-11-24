@@ -1,9 +1,6 @@
 local cmp = require("cmp")
 local luasnip = require("luasnip")
 local lspkind = require("lspkind")
-local bordered = cmp.config.window.bordered()
-local cmp_autopairs = require("nvim-autopairs.completion.cmp")
-cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
 
 require("luasnip.loaders.from_vscode").lazy_load()
 
@@ -40,8 +37,15 @@ cmp.setup({
 	},
 
 	window = {
-		completion = bordered,
-		documentation = bordered,
+		completion = cmp.config.window.bordered({
+			scrollbar = true,
+			border = "rounded",
+			col_offset = 1,
+		}),
+		documentation = cmp.config.window.bordered({
+			scrollbar = true,
+			border = "rounded",
+		}),
 	},
 
 	formatting = {

@@ -10,8 +10,11 @@ mason.setup({
 			package_uninstalled = "✗",
 		},
 	},
-	ensure_installed = {
-		"mypy",
+	opts = {
+		ensure_installed = {
+			"mypy",
+			"ruff",
+		},
 	},
 })
 
@@ -37,7 +40,8 @@ mason_tool_installer.setup({
 		"stylua", -- lua formatter
 		"isort", -- python formatter
 		"black", -- python formatter
-		"pylint", -- python linter
 		"eslint_d", -- js linter
+		"mypy",
+		"ruff",
 	},
 })

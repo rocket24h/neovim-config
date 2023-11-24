@@ -13,39 +13,37 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
 	-- Load necessary plugins
-	{ "goolord/alpha-nvim", dependencies = { "nvim-tree/nvim-web-devicons" } },
+	{
+		"goolord/alpha-nvim",
+		dependencies = { "nvim-tree/nvim-web-devicons" },
+		config = function()
+			require("config.alpha")
+		end,
+	},
 	{
 		"akinsho/toggleterm.nvim",
 		config = function()
-			require("toggleterm").setup({
-				size = 15,
-				shell = "powershell",
-				direction = "float",
-				open_mapping = [[<c-\>]],
-				shade_filetypes = {},
-				shading_factor = 2,
-				persist_size = true,
-				hide_numbers = true,
-				close_on_exit = true,
-				shade_terminals = true,
-				start_in_insert = true,
-				insert_mappings = true,
-				float_opts = {
-					winblend = 0,
-					border = "single",
-				},
-			})
+			require("config.toggleterm")
 		end,
 	},
 	{
 		"akinsho/bufferline.nvim",
 		config = function()
-			require("bufferline")
+			require("config.bufferline")
 		end,
 	},
 	{
-		"nvim-lualine/lualine.nvim",
-		event = { "VeryLazy" },
+		"lukas-reineke/indent-blankline.nvim",
+		config = function()
+			require("config.indent-blankline")
+		end,
+	},
+	{
+		"rebelot/heirline.nvim",
+		event = { "UIEnter" },
+		config = function()
+			require("config.heirline")
+		end,
 	},
 	{
 		"windwp/nvim-autopairs",
@@ -56,7 +54,10 @@ require("lazy").setup({
 	},
 	{
 		"neovim/nvim-lspconfig",
-		dependencies = { "hrsh7th/cmp-nvim-lsp", { "antosha417/nvim-lsp-file-operations", config = true } },
+		dependencies = {
+			"hrsh7th/cmp-nvim-lsp",
+			-- { "antosha417/nvim-lsp-file-operations", config = true },
+		},
 		event = { "BufReadPre", "BufNewFile" },
 		config = function()
 			require("config.lsp.nvim-lspconfig")
@@ -74,10 +75,11 @@ require("lazy").setup({
 	},
 	{
 		"nvim-tree/nvim-tree.lua",
-		lazy = false,
-		dependencies = { "nvim-tree/nvim-web-devicons" },
+		dependencies = {
+			"nvim-tree/nvim-web-devicons",
+		},
 		config = function()
-			require("nvim-tree").setup({})
+			require("config.nvim-tree")
 		end,
 	},
 	{
@@ -92,7 +94,6 @@ require("lazy").setup({
 		"nvim-telescope/telescope.nvim",
 		dependencies = {
 			"nvim-treesitter/nvim-treesitter",
-			"sharkdp/fd",
 			"nvim-lua/plenary.nvim",
 			{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
 		},
@@ -117,23 +118,6 @@ require("lazy").setup({
 		end,
 	},
 	{
-		"mcchrish/zenbones.nvim",
-		dependencies = { "rktjmp/lush.nvim" },
-		-- priority = 1000,
-		config = function()
-			require("config.zenbones")
-		end,
-	},
-	{ "EdenEast/nightfox.nvim" },
-	{
-		"folke/which-key.nvim",
-		event = "VeryLazy",
-		init = function()
-			vim.o.timeoutlen = 500
-			vim.o.timeout = true
-		end,
-	},
-	{
 		"stevearc/conform.nvim",
 		lazy = true,
 		event = { "BufReadPre", "BufNewFile" },
@@ -141,7 +125,29 @@ require("lazy").setup({
 			require("config.conform")
 		end,
 	},
-
+	{
+		"mfussenegger/nvim-lint",
+		lazy = true,
+		event = { "BufReadPre", "BufNewFile" },
+		config = function()
+			require("config.nvim-lint")
+		end,
+	},
+	{
+		"mcchrish/zenbones.nvim",
+		dependencies = { "rktjmp/lush.nvim" },
+		-- priority = 1000,
+		config = function()
+			require("config.zenbones")
+		end,
+	},
+	-- Experimental
+	{ "EdenEast/nightfox.nvim" },
+	{ "rebelot/kanagawa.nvim" },
+	{ "sainnhe/everforest" },
+	{ "AlexvZyl/nordic.nvim" },
+	{ "folke/tokyonight.nvim" },
+	{ "nyoom-engineering/oxocarbon.nvim" },
 	-------------
 	checker = {
 		enabled = true,

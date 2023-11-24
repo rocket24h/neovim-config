@@ -2,7 +2,8 @@ local toggleterm = require("toggleterm")
 
 local M = {
 	size = 15,
-	shell = "zsh",
+	-- shell = "zsh",
+	shell = "pwsh",
 	direction = "float",
 	open_mapping = [[<c-\>]],
 	shade_filetypes = {},
@@ -19,4 +20,4 @@ local M = {
 	},
 }
 
-return toggleterm.setup({ M })
+require("toggleterm").setup(M)
