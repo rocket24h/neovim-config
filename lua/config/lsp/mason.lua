@@ -10,12 +10,6 @@ mason.setup({
 			package_uninstalled = "✗",
 		},
 	},
-	opts = {
-		ensure_installed = {
-			"mypy",
-			"ruff",
-		},
-	},
 })
 
 mason_lspconfig.setup({

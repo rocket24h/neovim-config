@@ -3,7 +3,6 @@ local luasnip = require("luasnip")
 local lspkind = require("lspkind")
 
 require("luasnip.loaders.from_vscode").lazy_load()
-
 cmp.setup({
 	completion = {
 		completeopt = "menu, menuone, preview, noselect",
@@ -39,15 +38,19 @@ cmp.setup({
 	window = {
 		completion = cmp.config.window.bordered({
 			scrollbar = true,
-			border = "rounded",
+			border = "none",
+			winhighlight = "Normal:StatusLineNC",
+			side_padding = 0,
 			col_offset = 1,
 		}),
 		documentation = cmp.config.window.bordered({
 			scrollbar = true,
-			border = "rounded",
+			border = "none",
+			winhighlight = "Normal:StatusLineNC",
+			size_padding = 0,
+			col_offset = 1,
 		}),
 	},
-
 	formatting = {
 		format = lspkind.cmp_format({
 			maxwidth = 50,

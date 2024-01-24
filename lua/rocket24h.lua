@@ -39,10 +39,10 @@ require("lazy").setup({
 		end,
 	},
 	{
-		"rebelot/heirline.nvim",
-		event = { "UIEnter" },
+		"nvim-lualine/lualine.nvim",
+		event = "UIEnter",
 		config = function()
-			require("config.heirline")
+			require("config.lualine")
 		end,
 	},
 	{
@@ -145,9 +145,34 @@ require("lazy").setup({
 	{ "EdenEast/nightfox.nvim" },
 	{ "rebelot/kanagawa.nvim" },
 	{ "sainnhe/everforest" },
-	{ "AlexvZyl/nordic.nvim" },
+	{
+		"AlexvZyl/nordic.nvim",
+		lazy = false,
+		priority = 1000,
+		config = function()
+			require("config.nordic")
+		end,
+	},
 	{ "folke/tokyonight.nvim" },
 	{ "nyoom-engineering/oxocarbon.nvim" },
+	{ "savq/melange-nvim" },
+	{ "ribru17/bamboo.nvim" },
+	{ "nordtheme/vim" },
+	{
+		"aktersnurra/no-clown-fiesta.nvim",
+		lazy = false,
+		priority = 1000,
+		config = function()
+			require("config.no-clown-fiesta")
+		end,
+	},
+	-- {
+	--	"rebelot/heirline.nvim",
+	--	event = { "UIEnter" },
+	--	config = function()
+	--		require("config.heirline")
+	--	end,
+	--},
 	-------------
 	checker = {
 		enabled = true,

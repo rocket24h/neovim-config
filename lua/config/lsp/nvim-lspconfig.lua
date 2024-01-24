@@ -121,7 +121,6 @@ lspconfig["graphql"].setup({
 	on_attach = on_attach,
 	filetypes = { "graphql", "gql", "svelte", "typescriptreact", "javascriptreact" },
 })
-
 -- configure emmet language server
 lspconfig["emmet_ls"].setup({
 	capabilities = capabilities,
