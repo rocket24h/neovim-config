@@ -9,6 +9,7 @@ conf.options = {
 			separator = false,
 		},
 	},
+
 	color_icons = true,
 	show_buffer_icons = true,
 	show_buffer_close_icons = true,
