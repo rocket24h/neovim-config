@@ -53,6 +53,17 @@ require("lazy").setup({
 		end,
 	},
 	{
+		"williamboman/mason.nvim",
+		dependencies = {
+			"williamboman/mason-lspconfig.nvim",
+			"WhoIsSethDaniel/mason-tool-installer",
+		},
+		config = function()
+			require("config.lsp.mason")
+		end,
+	},
+
+	{
 		"neovim/nvim-lspconfig",
 		dependencies = {
 			"hrsh7th/cmp-nvim-lsp",
@@ -61,16 +72,6 @@ require("lazy").setup({
 		event = { "BufReadPre", "BufNewFile" },
 		config = function()
 			require("config.lsp.nvim-lspconfig")
-		end,
-	},
-	{
-		"williamboman/mason.nvim",
-		dependencies = {
-			"williamboman/mason-lspconfig.nvim",
-			"WhoIsSethDaniel/mason-tool-installer",
-		},
-		config = function()
-			require("config.lsp.mason")
 		end,
 	},
 	{

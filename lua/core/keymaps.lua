@@ -11,6 +11,7 @@ keymap.set("n", "<leader>e", "<cmd>NvimTreeToggle<CR>")
 -- File maneuvers
 keymap.set("n", "<C-s>", ":w!<CR>")
 keymap.set("n", "<C-q>", ":wq!<CR>")
+keymap.set("n", "<C-z>", "undo")
 
 -- Telescope
 keymap.set("n", "<leader>ff", "<cmd>Telescope find_files<cr>", { desc = "Fuzzy find files in cwd" })
@@ -21,6 +22,10 @@ keymap.set("n", "<leader>fc", "<cmd>Telescope grep_string<cr>", { desc = "Find s
 -- Buffer maneuvers
 keymap.set("n", "<C-l>", "<C-W>l")
 keymap.set("n", "<C-h>", "<C-W>h")
+keymap.set("n", "<C-j>", "<C-W-j>")
+keymap.set("n", "<C-k>", "<C-W-k>")
+keymap.set("n", "<C-a>", ":bprev<CR>")
+keymap.set("n", "<C-d>", ":bnext<CR>")
 
 -- Split scren
 keymap.set("n", "<A-k>", ":vsplit<CR>")
