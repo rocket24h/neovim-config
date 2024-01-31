@@ -1,6 +1,6 @@
 require("lualine").setup({
 	options = {
 		theme = "auto",
-		disabled_filetpes = { "NvimTree", "alpha" },
+		disabled_filetypes = { "NvimTree", "alpha" },
 	},
 })
