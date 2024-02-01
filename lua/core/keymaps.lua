@@ -29,3 +29,6 @@ keymap.set("n", "<C-d>", ":bnext<CR>")
 
 -- Split scren
 keymap.set("n", "<A-k>", ":vsplit<CR>")
+
+-- Minor inconveniences
+keymap.set("n", "<leader>dd", "<cmd> lua vim.diagnostic.open_float() <CR>", { desc = "toggles local troubleshoot" })
