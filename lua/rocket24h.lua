@@ -28,6 +28,7 @@ require("lazy").setup({
 	},
 	{
 		"akinsho/bufferline.nvim",
+		event = { "InsertEnter" },
 		config = function()
 			require("config.bufferline")
 		end,
@@ -134,22 +135,11 @@ require("lazy").setup({
 			require("config.nvim-lint")
 		end,
 	},
-	{
-		"mcchrish/zenbones.nvim",
-		dependencies = { "rktjmp/lush.nvim" },
-		-- priority = 1000,
-		config = function()
-			require("config.zenbones")
-		end,
-	},
 	-- Experimental
 	{
 		"mfussenegger/nvim-jdtls",
 		lazy = true,
 		event = { "BufReadPre", "BufNewFile" },
-		config = function()
-			require("config.lsp.nvim-jdtls")
-		end,
 	},
 	{
 		"AlexvZyl/nordic.nvim",

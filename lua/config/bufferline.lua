@@ -4,12 +4,12 @@ conf.options = {
 	offsets = {
 		{
 			filetype = "NvimTree",
-			text = "File Explorer",
-			text_align = "center",
+			text = " ◈ Nvim-Tree",
+			text_align = "left",
 			separator = false,
+			highlight = "NoiceCmdlineIcon",
 		},
 	},
-
 	color_icons = true,
 	show_buffer_icons = true,
 	show_buffer_close_icons = true,
@@ -23,5 +23,9 @@ conf.options = {
 		return " " .. icon .. count
 	end,
 }
+
+vim.cmd([[
+  hi BufferlineFill guibg='#191D24'
+]])
 
 require("bufferline").setup(conf)

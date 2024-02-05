@@ -16,3 +16,6 @@ opt.splitbelow = true
 
 opt.swapfile = false
 opt.autochdir = true
+
+opt.fillchars = { eob = " " }
+opt.cursorline = false
