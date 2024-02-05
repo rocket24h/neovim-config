@@ -1,4 +1,5 @@
 local opt = vim.opt
+local api = vim.api
 
 opt.tabstop = 2 -- 2 spaces for tabs (prettier default)
 opt.shiftwidth = 2 -- 2 spaces for indent width
@@ -19,3 +20,11 @@ opt.autochdir = true
 
 opt.fillchars = { eob = " " }
 opt.cursorline = false
+
+vim.api.nvim_create_autocmd("ColorScheme", {
+	pattern = "*",
+	callback = function()
+		-- Overwrite existing highlight groups using Vim API
+		api.nvim_set_hl(0, "FloatTitle", { bg = "#191D24", fg = "#ebcb8b" })
+	end,
+})

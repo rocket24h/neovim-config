@@ -7,7 +7,7 @@ conf.options = {
 			text = " ◈ Nvim-Tree",
 			text_align = "left",
 			separator = false,
-			highlight = "NoiceCmdlineIcon",
+			highlight = "FloatTitle",
 		},
 	},
 	color_icons = true,

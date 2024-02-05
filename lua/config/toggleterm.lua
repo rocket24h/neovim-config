@@ -1,9 +1,13 @@
 local toggleterm = require("toggleterm")
 
+local shell = "zsh"
+if vim.fn.has("win32") then
+	shell = "powershell"
+end
+
 local M = {
 	size = 15,
-	-- shell = "zsh",
-	shell = "powershell",
+	shell = shell,
 	direction = "float",
 	open_mapping = [[<c-\>]],
 	shade_filetypes = {},
