@@ -1,6 +1,6 @@
 local toggleterm = require("toggleterm")
 
-local shell = "zsh"
+local shell = "bash"
 if vim.fn.has("win32") then
 	shell = "powershell"
 end

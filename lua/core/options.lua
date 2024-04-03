@@ -20,7 +20,7 @@ opt.autochdir = true
 
 opt.fillchars = { eob = " " }
 opt.cursorline = false
-
+opt.laststatus = 3
 vim.api.nvim_create_autocmd("ColorScheme", {
 	pattern = "*",
 	callback = function()

@@ -59,8 +59,7 @@ end
 local config = {
 
 	cmd = {
-		"java", -- or '/path/to/java17_or_newer/bin/java'
-
+		"java",
 		"-Declipse.application=org.eclipse.jdt.ls.core.id1",
 		"-Dosgi.bundles.defaultStartLevel=4",
 		"-Declipse.product=org.eclipse.jdt.ls.core.product",
@@ -96,7 +95,16 @@ local config = {
 	-- See https://github.com/eclipse/eclipse.jdt.ls/wiki/Running-the-JAVA-LS-server-from-the-command-line#initialize-request
 	-- for a list of options
 	settings = {
-		java = {},
+		java = {
+			configuration = {
+				runtimes = {
+					{
+						name = "JavaSE-1.8",
+						path = "C:\\Program Files\\Java\\jdk-1.8",
+					},
+				},
+			},
+		},
 	},
 
 	-- Language server `initializationOptions`

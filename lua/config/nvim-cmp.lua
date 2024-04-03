@@ -39,14 +39,14 @@ cmp.setup({
 		completion = cmp.config.window.bordered({
 			scrollbar = true,
 			border = "none",
-			winhighlight = "Normal:StatusLineNC",
+			winhighlight = "Normal:TabLine,FloatBorder:Todo,Search:None",
 			side_padding = 0,
 			col_offset = 1,
 		}),
 		documentation = cmp.config.window.bordered({
 			scrollbar = true,
 			border = "none",
-			winhighlight = "Normal:StatusLineNC",
+			winhighlight = "Normal:TabLine,FloatBorder:Todo,Search:None",
 			size_padding = 0,
 			col_offset = 1,
 		}),

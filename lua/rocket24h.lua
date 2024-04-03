@@ -28,17 +28,21 @@ require("lazy").setup({
 	},
 	{
 		"akinsho/bufferline.nvim",
+		lazy = true,
 		event = { "InsertEnter" },
 		config = function()
 			require("config.bufferline")
 		end,
 	},
-	{
-		"lukas-reineke/indent-blankline.nvim",
-		config = function()
-			require("config.indent-blankline")
-		end,
-	},
+
+	-- {
+	--	"lukas-reineke/indent-blankline.nvim",
+	--	lazy = true,
+	--	event = "InsertEnter",
+	--	config = function()
+	--		require("config.indent-blankline")
+	--	end,
+	-- },
 	{
 		"nvim-lualine/lualine.nvim",
 		event = "UIEnter",
@@ -48,6 +52,7 @@ require("lazy").setup({
 	},
 	{
 		"windwp/nvim-autopairs",
+		lazy = true,
 		event = "InsertEnter",
 		config = function()
 			require("config.nvim-autopairs")
@@ -70,6 +75,7 @@ require("lazy").setup({
 			"hrsh7th/cmp-nvim-lsp",
 			-- { "antosha417/nvim-lsp-file-operations", config = true },
 		},
+		lazy = true,
 		event = { "BufReadPre", "BufNewFile" },
 		config = function()
 			require("config.lsp.nvim-lspconfig")
@@ -105,6 +111,7 @@ require("lazy").setup({
 	},
 	{
 		"hrsh7th/nvim-cmp",
+		lazy = true,
 		event = "InsertEnter",
 		dependencies = {
 			"hrsh7th/cmp-buffer",
@@ -149,7 +156,16 @@ require("lazy").setup({
 			require("config.nordic")
 		end,
 	},
-
+	{
+		"sainnhe/everforest",
+	},
+	{
+		"Everblush/nvim",
+		name = "everblush",
+	},
+	{
+		"morhetz/gruvbox",
+	},
 	checker = {
 		enabled = true,
 		notify = false,

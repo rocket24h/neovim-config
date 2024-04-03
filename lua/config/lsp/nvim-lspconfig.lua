@@ -163,9 +163,9 @@ lspconfig["lua_ls"].setup({
 	},
 })
 
---  lspconfig["jdtls"].setup({
---   capabilities = capabilities,
---    on_attach = on_attach,
---    filetypes = { "java" },
---    root_dir = lspconfig.util.root_pattern("pom.xml", "build.gradle", ".git") or vim.fn.getcwd(),
---  })
+--lspconfig["jdtls"].setup({
+--	capabilities = capabilities,
+--	on_attach = on_attach,
+--	filetypes = { "java" },
+--	root_dir = lspconfig.util.root_pattern("pom.xml", "build.gradle", ".git") or vim.fn.getcwd(),
+--})
