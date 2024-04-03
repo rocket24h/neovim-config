@@ -1,3 +1,6 @@
 -- vim.cmd("hi NvimTreeNormal guibg=#191D24")
 -- vim.cmd("hi NvimTreeNormalNC guibg=#191D24")
+vim.cmd("hi NvimTreeGitNewIcon guifg=#A3BE8C")
+vim.cmd("hi NvimTreeGitDirtyIcon guifg=#CB775D")
+vim.cmd("hi NvimTreeGitStagedIcon guifg=#8FBCBB")
 require("nvim-tree").setup({})

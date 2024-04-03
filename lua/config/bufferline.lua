@@ -4,7 +4,7 @@ conf.options = {
 	offsets = {
 		{
 			filetype = "NvimTree",
-			text = " ◈ Nvim-Tree",
+			text = "  Nvim-Tree",
 			text_align = "left",
 			separator = false,
 			highlight = "FloatTitle",
@@ -20,7 +20,7 @@ conf.options = {
 	diagnostics = "nvim_lsp",
 	diagnostics_indicator = function(count, level, diagnostics_dict, context)
 		local icon = level:match("error") and " " or " "
-		return " " .. icon .. count
+		return icon .. count
 	end,
 }
 
