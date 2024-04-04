@@ -27,27 +27,11 @@ require("lazy").setup({
 		end,
 	},
 	{
-		"akinsho/bufferline.nvim",
+		"willothy/nvim-cokeline",
 		lazy = true,
 		event = { "InsertEnter" },
 		config = function()
-			require("config.bufferline")
-		end,
-	},
-
-	-- {
-	--	"lukas-reineke/indent-blankline.nvim",
-	--	lazy = true,
-	--	event = "InsertEnter",
-	--	config = function()
-	--		require("config.indent-blankline")
-	--	end,
-	-- },
-	{
-		"nvim-lualine/lualine.nvim",
-		event = "UIEnter",
-		config = function()
-			require("config.lualine")
+			require("config.cokeline")
 		end,
 	},
 	{
@@ -157,14 +141,12 @@ require("lazy").setup({
 		end,
 	},
 	{
-		"sainnhe/everforest",
-	},
-	{
-		"Everblush/nvim",
-		name = "everblush",
-	},
-	{
-		"morhetz/gruvbox",
+		"rebelot/heirline.nvim",
+		lazy = true,
+		event = { "UIEnter" },
+		config = function()
+			require("config.heirline")
+		end,
 	},
 	checker = {
 		enabled = true,

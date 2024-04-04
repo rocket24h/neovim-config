@@ -21,10 +21,12 @@ opt.autochdir = true
 opt.fillchars = { eob = " " }
 opt.cursorline = false
 opt.laststatus = 3
+opt.showcmdloc = "statusline"
+
 vim.api.nvim_create_autocmd("ColorScheme", {
 	pattern = "*",
 	callback = function()
 		-- Overwrite existing highlight groups using Vim API
-		api.nvim_set_hl(0, "FloatTitle", { bg = "#191D24", fg = "#A3BE8C" })
+		api.nvim_set_hl(0, "FloatTitle", { bg = "#191D24", fg = "#EBCB8B" })
 	end,
 })
