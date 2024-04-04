@@ -227,7 +227,7 @@ local Git = {
 		self.has_changes = self.status_dict.added ~= 0 or self.status_dict.removed ~= 0 or self.status_dict.changed ~= 0
 	end,
 
-	hl = { fg = colors.orange },
+	hl = { fg = colors.blue },
 
 	{ -- git branch name
 		provider = function(self)
@@ -235,7 +235,6 @@ local Git = {
 		end,
 		hl = { bold = true },
 	},
-	-- You could handle delimiters, icons and counts similar to Diagnostics
 	{
 		condition = function(self)
 			return self.has_changes
@@ -309,13 +308,14 @@ local Align = { provider = "%=" }
 local Space = { provider = " " }
 VimModes = utils.surround({ "", "" }, function(self)
 	return self:get_mode_color()
-end, { VimModes, SearchCount })
+end, { VimModes })
 FileNameBlock =
 	utils.insert(FileNameBlock, FileIcon, utils.insert(FileNameModifier, FileName), FileFlags, { provider = "%<" })
 Diagnostics = utils.surround({ "![", "]" }, nil, Diagnostics)
 local DefaultStatusLine = {
-	Space,
 	VimModes,
+	Space,
+	SearchCount,
 	Space,
 	Git,
 	Space,

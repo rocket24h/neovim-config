@@ -141,9 +141,20 @@ require("lazy").setup({
 		end,
 	},
 	{
+		"lewis6991/gitsigns.nvim",
+		lazy = true,
+		event = { "BufReadPre", "BufNewFile" },
+		config = function()
+			require("config.gitsigns")
+		end,
+	},
+	{
 		"rebelot/heirline.nvim",
 		lazy = true,
 		event = { "UIEnter" },
+		dependencies = {
+			"lewis6991/gitsigns.nvim",
+		},
 		config = function()
 			require("config.heirline")
 		end,
