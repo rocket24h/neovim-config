@@ -22,9 +22,9 @@ local colors = {
 	diag_error = get_hl("DiagnosticError").fg,
 	diag_hint = get_hl("DiagnosticHint").fg,
 	diag_info = get_hl("DiagnosticInfo").fg,
-	git_del = get_hl("diffDeleted").fg,
-	git_add = get_hl("diffAdded").fg,
-	git_change = get_hl("diffChanged").fg,
+	git_del = "#A97EA1",
+	git_add = "#A3BE8C",
+	git_change = "#D08770",
 }
 
 M.colors = colors

@@ -21,7 +21,7 @@ opt.autochdir = true
 opt.fillchars = { eob = " " }
 opt.cursorline = false
 opt.laststatus = 3
-opt.showcmdloc = "statusline"
+-- opt.showcmdloc = "statusline"
 
 vim.api.nvim_create_autocmd("ColorScheme", {
 	pattern = "*",

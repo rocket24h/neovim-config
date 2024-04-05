@@ -147,6 +147,44 @@ local Ruler = {
 	},
 }
 
+local FileEncoding = {
+	provider = function()
+		local enc = (vim.bo.fenc ~= "" and vim.bo.fenc) or vim.o.enc -- :h 'enc'
+		return enc ~= "utf-8" and enc:upper()
+	end,
+}
+
+local WorkDir = {
+	init = function(self)
+		self.icon = (vim.fn.haslocaldir(0) == 1 and "l" or "g") .. " " .. "󰝰 "
+		local cwd = vim.fn.getcwd(0)
+		self.cwd = vim.fn.fnamemodify(cwd, ":~")
+	end,
+	hl = { fg = colors.blue, bold = true },
+
+	flexible = 1,
+
+	{
+		-- evaluates to the full-lenth path
+		provider = function(self)
+			local trail = self.cwd:sub(-1) == "\\" and "" or "\\"
+			return self.icon .. self.cwd .. trail .. " "
+		end,
+	},
+	{
+		-- evaluates to the shortened path
+		provider = function(self)
+			local cwd = vim.fn.pathshorten(self.cwd)
+			local trail = self.cwd:sub(-1) == "\\" and "" or "\\"
+			return self.icon .. cwd .. trail .. ""
+		end,
+	},
+	{
+		-- evaluates to "", hiding the component
+		provider = "",
+	},
+}
+
 local ScrollBar = {
 	static = {
 		sbar = { "▁", "▂", "▃", "▄", "▅", "▆", "▇", "█" },
@@ -251,14 +289,14 @@ local Git = {
 	{
 		provider = function(self)
 			local count = self.status_dict.removed or 0
-			return count > 0 and ("-" .. count)
+			return count > 0 and (" -" .. count)
 		end,
 		hl = { fg = colors.git_del },
 	},
 	{
 		provider = function(self)
 			local count = self.status_dict.changed or 0
-			return count > 0 and ("~" .. count)
+			return count > 0 and (" ~" .. count)
 		end,
 		hl = { fg = colors.git_change },
 	},
@@ -268,14 +306,6 @@ local Git = {
 		end,
 		provider = " |",
 	},
-}
-
-local TerminalName = {
-	provider = function()
-		local tname, _ = vim.api.nvim_buf_get_name(0):gsub(".*", "")
-		return " " .. tname
-	end,
-	hl = { fg = colors.blue, bold = true },
 }
 
 local SearchCount = {
@@ -294,11 +324,23 @@ local SearchCount = {
 	end,
 }
 
-local ShowCmd = {
-	condition = function()
-		return vim.o.cmdheight == 0
+local TerminalName = {
+	provider = function()
+		local tname, _ = vim.api.nvim_buf_get_name(0):gsub(".*:", "")
+		return " " .. tname
 	end,
-	provider = ":%3.5(%S%)",
+	hl = { fg = colors.blue, bold = true },
+}
+
+local HelpFileName = {
+	condition = function()
+		return vim.bo.filetype == "help"
+	end,
+	provider = function()
+		local filename = vim.api.nvim_buf_get_name(0)
+		return vim.fn.fnamemodify(filename, ":t")
+	end,
+	hl = { fg = colors.blue },
 }
 
 -- ====================
@@ -311,7 +353,6 @@ VimModes = utils.surround({ "", "" }, function(self)
 end, { VimModes })
 FileNameBlock =
 	utils.insert(FileNameBlock, FileIcon, utils.insert(FileNameModifier, FileName), FileFlags, { provider = "%<" })
-Diagnostics = utils.surround({ "![", "]" }, nil, Diagnostics)
 local DefaultStatusLine = {
 	VimModes,
 	Space,
@@ -321,8 +362,11 @@ local DefaultStatusLine = {
 	Space,
 	Diagnostics,
 	Align,
+	WorkDir,
 	FileNameBlock,
 	Align,
+	FileEncoding,
+	Space,
 	LSPInfo,
 	Space,
 	Ruler,
@@ -334,6 +378,34 @@ local InactiveStatusLine = {
 	condition = conditions.is_not_active,
 	Align,
 	FileNameBlock,
+	Align,
+}
+
+local TerminalStatusline = {
+
+	condition = function()
+		return conditions.buffer_matches({ buftype = { "terminal" } })
+	end,
+
+	hl = { fg = colors.blue },
+
+	-- Quickly add a condition to the ViMode to only show it when buffer is active!
+	{ condition = conditions.is_active, VimModes, Space },
+	TerminalName,
+}
+
+local SpecialStatusline = {
+	condition = function()
+		return conditions.buffer_matches({
+			buftype = { "nofile", "prompt", "help", "quickfix" },
+			filetype = { "^git.*", "fugitive" },
+		})
+	end,
+
+	Align,
+	FileType,
+	Space,
+	HelpFileName,
 	Align,
 }
 
@@ -367,6 +439,8 @@ local StatusLines = {
 		end
 	end,
 	fallthrough = false,
+	SpecialStatusline,
+	TerminalStatusline,
 	InactiveStatusLine,
 	DefaultStatusLine,
 }
