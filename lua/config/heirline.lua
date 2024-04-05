@@ -1,6 +1,8 @@
 local _, heirline = pcall(require, "heirline")
 local _, conditions = pcall(require, "heirline.conditions")
 local _, utils = pcall(require, "heirline.utils")
+-- Add more themes in the theme folder
+-- Name them [colorscheme]_heirline.lua, and the command auto detects the theme
 local _, theme = pcall(require, "config.themes." .. (vim.g.colors_name or "") .. "_heirline")
 local _, devicons = pcall(require, "nvim-web-devicons")
 
@@ -13,6 +15,7 @@ local colors = theme.colors
 -- GETTING THE PARTS READY
 -- ========================
 
+-- Define modes and their displayed names here
 local VimModes = {
 	init = function(self)
 		self.mode = vim.fn.mode(1)
@@ -78,12 +81,14 @@ local VimModes = {
 	},
 }
 
+-- FileNameBlock object, used later
 local FileNameBlock = {
 	init = function(self)
 		self.filename = vim.api.nvim_buf_get_name(0)
 	end,
 }
 
+-- Self-explanatory
 local FileIcon = {
 	init = function(self)
 		local filename = self.filename
@@ -124,7 +129,7 @@ local FileFlags = {
 		hl = { fg = colors.orange },
 	},
 }
-
+-- Glows a certain color if the file is modified without saving
 local FileNameModifier = {
 	hl = function()
 		if vim.bo.modified then
@@ -140,6 +145,7 @@ local FileType = {
 	hl = { fg = utils.get_highlight("Type").fg, bold = true },
 }
 
+-- Ruler display
 local Ruler = {
 	provider = "%7(%l/%3L%):%2c %P",
 	hl = {
@@ -147,13 +153,7 @@ local Ruler = {
 	},
 }
 
-local FileEncoding = {
-	provider = function()
-		local enc = (vim.bo.fenc ~= "" and vim.bo.fenc) or vim.o.enc -- :h 'enc'
-		return enc ~= "utf-8" and enc:upper()
-	end,
-}
-
+-- Get the current working directory (flexible as well)
 local WorkDir = {
 	init = function(self)
 		self.icon = (vim.fn.haslocaldir(0) == 1 and "l" or "g") .. " " .. "󰝰 "
@@ -185,6 +185,7 @@ local WorkDir = {
 	},
 }
 
+-- Fun little scrollbar
 local ScrollBar = {
 	static = {
 		sbar = { "▁", "▂", "▃", "▄", "▅", "▆", "▇", "█" },
@@ -198,6 +199,7 @@ local ScrollBar = {
 	hl = { fg = colors.green, bg = colors.bg },
 }
 
+-- LSP Information
 local LSPInfo = {
 	condition = conditions.lsp_attached,
 	update = { "LspAttach", "LspDetach" },
@@ -214,6 +216,7 @@ local LSPInfo = {
 	},
 }
 
+-- Diagnostics
 local Diagnostics = {
 	condition = conditions.has_diagnostics,
 
@@ -269,7 +272,7 @@ local Git = {
 
 	{ -- git branch name
 		provider = function(self)
-			return " " .. self.status_dict.head
+			return " " .. self.status_dict.head .. " "
 		end,
 		hl = { bold = true },
 	},
@@ -365,8 +368,6 @@ local DefaultStatusLine = {
 	WorkDir,
 	FileNameBlock,
 	Align,
-	FileEncoding,
-	Space,
 	LSPInfo,
 	Space,
 	Ruler,
