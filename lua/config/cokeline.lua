@@ -1,5 +1,4 @@
 local get_hex = require("cokeline.hlgroups").get_hl_attr
-local yellow = vim.g.terminal_color_3
 
 require("cokeline").setup({
 	default_hl = {
@@ -15,9 +14,19 @@ require("cokeline").setup({
 				text = function(buffer)
 					return "    " .. buffer.filetype
 				end,
-				fg = yellow,
+				fg = function()
+					if vim.g.colors_name == "zenbones" then
+						return get_hex("StatusLine", "fg")
+					else
+						return get_hex("FloatTitle", "fg")
+					end
+				end,
 				bg = function()
-					return get_hex("StatusLine", "bg")
+					if vim.g.colors_name == "zenbones" then
+						return get_hex("NvimTreeLineNr", "fg")
+					else
+						return get_hex("StatusLine", "bg")
+					end
 				end,
 				bold = true,
 			},

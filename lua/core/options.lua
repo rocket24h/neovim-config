@@ -21,12 +21,15 @@ opt.autochdir = true
 opt.fillchars = { eob = " " }
 opt.cursorline = false
 opt.laststatus = 3
--- opt.showcmdloc = "statusline"
+opt.showcmdloc = "statusline"
+opt.linespace = 2
 
 vim.api.nvim_create_autocmd("ColorScheme", {
 	pattern = "*",
 	callback = function()
 		-- Overwrite existing highlight groups using Vim API
-		api.nvim_set_hl(0, "FloatTitle", { bg = "#191D24", fg = "#EBCB8B" })
+		-- For some reason, changing this hl group using the "hi" command doesn't work
+		-- Comment this if you're not using zenbones, or change it idk
+		api.nvim_set_hl(0, "NvimTreeRootFolder", { fg = "#819B69" })
 	end,
 })

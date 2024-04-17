@@ -1,13 +1,6 @@
-local toggleterm = require("toggleterm")
-
-local shell = "bash"
-if vim.fn.has("win32") then
-	shell = "powershell"
-end
-
-local M = {
+require("toggleterm").setup({
 	size = 15,
-	shell = shell,
+	shell = vim.o.shell,
 	direction = "float",
 	open_mapping = [[<c-\>]],
 	shade_filetypes = {},
@@ -22,6 +15,4 @@ local M = {
 		winblend = 0,
 		border = "single",
 	},
-}
-
-require("toggleterm").setup(M)
+})

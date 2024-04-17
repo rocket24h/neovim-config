@@ -20,7 +20,6 @@ local VimModes = {
 	init = function(self)
 		self.mode = vim.fn.mode(1)
 	end,
-
 	static = {
 		-- Defining mode names
 		mode_names = {
@@ -160,7 +159,10 @@ local WorkDir = {
 		local cwd = vim.fn.getcwd(0)
 		self.cwd = vim.fn.fnamemodify(cwd, ":~")
 	end,
-	hl = { fg = colors.blue, bold = true },
+	hl = {
+		fg = colors.gray,
+		bold = true,
+	},
 
 	flexible = 1,
 
@@ -274,13 +276,14 @@ local Git = {
 		provider = function(self)
 			return " " .. self.status_dict.head .. " "
 		end,
-		hl = { bold = true },
+		hl = { bold = true, fg = colors.orange },
 	},
 	{
 		condition = function(self)
 			return self.has_changes
 		end,
 		provider = "| ",
+		hl = { fg = colors.orange },
 	},
 	{
 		provider = function(self)
@@ -308,6 +311,7 @@ local Git = {
 			return self.has_changes
 		end,
 		provider = " |",
+		hl = { fg = colors.orange },
 	},
 }
 
@@ -346,6 +350,11 @@ local HelpFileName = {
 	hl = { fg = colors.blue },
 }
 
+local DecorBlock = {
+	provider = "",
+	hl = { fg = colors.fg },
+}
+
 -- ====================
 -- ASSEMBLY LINES HERE
 -- ====================
@@ -357,6 +366,8 @@ end, { VimModes })
 FileNameBlock =
 	utils.insert(FileNameBlock, FileIcon, utils.insert(FileNameModifier, FileName), FileFlags, { provider = "%<" })
 local DefaultStatusLine = {
+	DecorBlock,
+	Space,
 	VimModes,
 	Space,
 	SearchCount,
@@ -373,6 +384,8 @@ local DefaultStatusLine = {
 	Ruler,
 	Space,
 	ScrollBar,
+	Space,
+	DecorBlock,
 }
 
 local InactiveStatusLine = {
@@ -410,10 +423,20 @@ local SpecialStatusline = {
 	Align,
 }
 
+local AlphaStatusLine = {
+	condition = function()
+		return conditions.buffer_matches({
+			filetype = { "alpha" },
+		})
+	end,
+}
+
 local StatusLines = {
 	static = {
 		mode_colors = {
-			n = colors.yellow,
+			-- For zenbones only
+			n = colors.fg,
+			-- n = colors.yellow,
 			i = colors.green,
 			v = colors.cyan,
 			V = colors.cyan,
@@ -435,11 +458,15 @@ local StatusLines = {
 	hl = function()
 		if conditions.is_active() then
 			return "StatusLine"
+		elseif conditions.buffer_matches({ filetype = "Alpha" }) then
+			return "debugPC"
 		else
-			return "StatusLinesNC"
+			return "debugPC"
 		end
 	end,
 	fallthrough = false,
+	-- Apparently order matters, don't alter this
+	AlphaStatusLine,
 	SpecialStatusline,
 	TerminalStatusline,
 	InactiveStatusLine,

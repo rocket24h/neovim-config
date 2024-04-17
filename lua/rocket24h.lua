@@ -1,4 +1,5 @@
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+
 if not vim.loop.fs_stat(lazypath) then
 	vim.fn.system({
 		"git",
@@ -52,7 +53,6 @@ require("lazy").setup({
 			require("config.lsp.mason")
 		end,
 	},
-
 	{
 		"neovim/nvim-lspconfig",
 		dependencies = {
@@ -134,10 +134,17 @@ require("lazy").setup({
 	},
 	{
 		"AlexvZyl/nordic.nvim",
-		lazy = false,
-		priority = 1000,
+		-- lazy = false,
+		-- priority = 1000,
 		config = function()
 			require("config.nordic")
+		end,
+	},
+	{
+		"mcchrish/zenbones.nvim",
+		dependencies = { "rktjmp/lush.nvim" },
+		config = function()
+			require("config.zenbones")
 		end,
 	},
 	{
