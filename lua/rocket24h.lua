@@ -126,7 +126,6 @@ require("lazy").setup({
 			require("config.nvim-lint")
 		end,
 	},
-	-- Experimental
 	{
 		"mfussenegger/nvim-jdtls",
 		lazy = true,
@@ -136,15 +135,15 @@ require("lazy").setup({
 		"AlexvZyl/nordic.nvim",
 		-- lazy = false,
 		-- priority = 1000,
-		config = function()
-			require("config.nordic")
-		end,
+		-- config = function()
+		-- 	require("config.themes.nordic")
+		-- end,
 	},
 	{
 		"mcchrish/zenbones.nvim",
 		dependencies = { "rktjmp/lush.nvim" },
 		config = function()
-			require("config.zenbones")
+			require("config.themes.zenbones")
 		end,
 	},
 	{

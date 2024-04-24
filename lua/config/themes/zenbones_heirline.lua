@@ -3,6 +3,7 @@ local get_hl = utils.get_highlight
 local M = {}
 -- Also from the official zenbones repo
 -- https://github.com/AlexvZyl/nordic.nvim/blob/main/lua/nordic/colors/nordic.lua
+
 local colors = {
 	bg = "#1C1917",
 	fg = "#B4BDC3",

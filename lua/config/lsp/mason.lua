@@ -23,9 +23,9 @@ mason_lspconfig.setup({
 		"pyright",
 		"clangd",
 		"vimls",
+		"hls",
 		-- "jdtls",
 	},
-
 	automatic_installation = true,
 })
 

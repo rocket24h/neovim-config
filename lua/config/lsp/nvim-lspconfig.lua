@@ -163,6 +163,14 @@ lspconfig["lua_ls"].setup({
 	},
 })
 
+lspconfig["hls"].setup({
+	capabilities = capabilities,
+	on_attach = on_attach,
+	filetypes = { "haskell" },
+})
+
+-- Using nvim-jdtls instead of this
+-- Refer to ftplugin/java.lua for more config
 --lspconfig["jdtls"].setup({
 --	capabilities = capabilities,
 --	on_attach = on_attach,

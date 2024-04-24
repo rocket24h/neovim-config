@@ -1,6 +1,9 @@
 local opt = vim.opt
 local api = vim.api
 
+-- Modify colorscheme here
+-- Currently support nordic and zenbones
+
 opt.tabstop = 2 -- 2 spaces for tabs (prettier default)
 opt.shiftwidth = 2 -- 2 spaces for indent width
 opt.expandtab = true -- expand tab to spaces

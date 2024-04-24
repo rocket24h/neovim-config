@@ -5,12 +5,10 @@ local _, utils = pcall(require, "heirline.utils")
 -- Name them [colorscheme]_heirline.lua, and the command auto detects the theme
 local _, theme = pcall(require, "config.themes." .. (vim.g.colors_name or "") .. "_heirline")
 local _, devicons = pcall(require, "nvim-web-devicons")
-
 if not theme then
 	return
 end
 local colors = theme.colors
-
 -- ========================
 -- GETTING THE PARTS READY
 -- ========================
@@ -79,14 +77,12 @@ local VimModes = {
 		end),
 	},
 }
-
 -- FileNameBlock object, used later
 local FileNameBlock = {
 	init = function(self)
 		self.filename = vim.api.nvim_buf_get_name(0)
 	end,
 }
-
 -- Self-explanatory
 local FileIcon = {
 	init = function(self)
@@ -282,13 +278,13 @@ local Git = {
 		condition = function(self)
 			return self.has_changes
 		end,
-		provider = "| ",
+		provider = "[",
 		hl = { fg = colors.orange },
 	},
 	{
 		provider = function(self)
 			local count = self.status_dict.added or 0
-			return count > 0 and ("+" .. count)
+			return count > 0 and (" +" .. count)
 		end,
 		hl = { fg = colors.git_add },
 	},
@@ -310,7 +306,7 @@ local Git = {
 		condition = function(self)
 			return self.has_changes
 		end,
-		provider = " |",
+		provider = " ]",
 		hl = { fg = colors.orange },
 	},
 }
