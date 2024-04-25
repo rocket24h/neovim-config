@@ -12,7 +12,7 @@ require("cokeline").setup({
 		components = {
 			{
 				text = function(buffer)
-					return "    " .. buffer.filetype
+					return "    " .. buffer.filetype
 				end,
 				fg = function()
 					if vim.g.colors_name == "zenbones" then
