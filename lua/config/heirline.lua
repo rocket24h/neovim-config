@@ -1,10 +1,11 @@
 local _, heirline = pcall(require, "heirline")
 local _, conditions = pcall(require, "heirline.conditions")
-local _, utils = pcall(require, "heirline.utils")
+local _, heirline_utils = pcall(require, "heirline.utils")
 -- Add more themes in the theme folder
 -- Name them [colorscheme]_heirline.lua, and the command auto detects the theme
 local _, theme = pcall(require, "config.themes." .. (vim.g.colors_name or "") .. "_heirline")
 local _, devicons = pcall(require, "nvim-web-devicons")
+local _, utils = pcall(require, "core.utils")
 if not theme then
 	return
 end
@@ -61,7 +62,7 @@ local VimModes = {
 
 	-- Assign provider and highlights
 	provider = function(self)
-		return " %2(" .. self.mode_names[vim.fn.mode(1)] .. "%)"
+		return "  %2(" .. self.mode_names[vim.fn.mode(1)] .. "%)"
 	end,
 
 	hl = function(self)
@@ -83,6 +84,7 @@ local FileNameBlock = {
 		self.filename = vim.api.nvim_buf_get_name(0)
 	end,
 }
+
 -- Self-explanatory
 local FileIcon = {
 	init = function(self)
@@ -91,10 +93,10 @@ local FileIcon = {
 		self.icon, self.icon_color = devicons.get_icon_color(filename, extension, { default = true })
 	end,
 	provider = function(self)
-		return self.icon and (self.icon .. " ")
+		return self.icon .. " "
 	end,
 	hl = function(self)
-		return { fg = self.icon_color }
+		return { fg = colors.fg }
 	end,
 }
 
@@ -124,7 +126,7 @@ local FileFlags = {
 		hl = { fg = colors.orange },
 	},
 }
--- Glows a certain color if the file is modified without saving
+-- Displays a certain color if the file is modified but not saved
 local FileNameModifier = {
 	hl = function()
 		if vim.bo.modified then
@@ -137,17 +139,8 @@ local FileType = {
 	provider = function()
 		return string.upper(vim.bo.filetype)
 	end,
-	hl = { fg = utils.get_highlight("Type").fg, bold = true },
+	hl = { fg = heirline_utils.get_highlight("Type").fg, bold = true },
 }
-
--- Ruler display
-local Ruler = {
-	provider = "%7(%l/%3L%):%2c %P",
-	hl = {
-		fg = colors.fg,
-	},
-}
-
 -- Get the current working directory (flexible as well)
 local WorkDir = {
 	init = function(self)
@@ -161,7 +154,6 @@ local WorkDir = {
 	},
 
 	flexible = 1,
-
 	{
 		-- evaluates to the full-lenth path
 		provider = function(self)
@@ -197,6 +189,14 @@ local ScrollBar = {
 	hl = { fg = colors.green, bg = colors.bg },
 }
 
+-- Ruler display
+local Ruler = {
+	provider = "%7(%l/%3L%)|%2c %P",
+	hl = function(self)
+		local color = self:get_mode_color()
+		return { fg = colors.bg, bg = color }
+	end,
+}
 -- LSP Information
 local LSPInfo = {
 	condition = conditions.lsp_attached,
@@ -260,54 +260,39 @@ local Diagnostics = {
 
 local Git = {
 	condition = conditions.is_git_repo,
-
 	init = function(self)
 		self.status_dict = vim.b.gitsigns_status_dict
 		self.has_changes = self.status_dict.added ~= 0 or self.status_dict.removed ~= 0 or self.status_dict.changed ~= 0
 	end,
 
-	hl = { fg = colors.blue },
+	hl = { fg = colors.blue, bg = colors.bg },
 
 	{ -- git branch name
 		provider = function(self)
-			return " " .. self.status_dict.head .. " "
+			return " " .. self.status_dict.head .. "  "
 		end,
 		hl = { bold = true, fg = colors.orange },
 	},
 	{
-		condition = function(self)
-			return self.has_changes
-		end,
-		provider = "[",
-		hl = { fg = colors.orange },
-	},
-	{
 		provider = function(self)
 			local count = self.status_dict.added or 0
-			return count > 0 and (" +" .. count)
+			return count > 0 and ("  " .. count)
 		end,
 		hl = { fg = colors.git_add },
 	},
 	{
 		provider = function(self)
 			local count = self.status_dict.removed or 0
-			return count > 0 and (" -" .. count)
+			return count > 0 and ("  " .. count)
 		end,
 		hl = { fg = colors.git_del },
 	},
 	{
 		provider = function(self)
 			local count = self.status_dict.changed or 0
-			return count > 0 and (" ~" .. count)
+			return count > 0 and ("  " .. count)
 		end,
 		hl = { fg = colors.git_change },
-	},
-	{
-		condition = function(self)
-			return self.has_changes
-		end,
-		provider = " ]",
-		hl = { fg = colors.orange },
 	},
 }
 
@@ -346,53 +331,55 @@ local HelpFileName = {
 	hl = { fg = colors.blue },
 }
 
-local DecorBlock = {
-	provider = "",
-	hl = { fg = colors.fg },
-}
-
 -- ====================
 -- ASSEMBLY LINES HERE
 -- ====================
 local Align = { provider = "%=" }
 local Space = { provider = " " }
-VimModes = utils.surround({ "", "" }, function(self)
+VimModes = heirline_utils.surround({ "", utils.decorations.right_semicircle }, function(self)
 	return self:get_mode_color()
 end, { VimModes })
-FileNameBlock =
-	utils.insert(FileNameBlock, FileIcon, utils.insert(FileNameModifier, FileName), FileFlags, { provider = "%<" })
-local DefaultStatusLine = {
-	DecorBlock,
-	Space,
+Ruler = heirline_utils.surround({ utils.decorations.left_semicircle, " " }, function(self)
+	return self:get_mode_color()
+end, { Ruler, Space })
+
+FileNameBlock = heirline_utils.insert(
+	FileNameBlock,
+	FileIcon,
+	heirline_utils.insert(FileNameModifier, FileName),
+	FileFlags,
+	{ provider = "%<" }
+)
+
+local active_left_segment = {
 	VimModes,
 	Space,
-	SearchCount,
-	Space,
-	Git,
-	Space,
-	Diagnostics,
-	Align,
-	WorkDir,
+	heirline_utils.surround({ " ", " " }, colors.bg, { Git, Space }),
+}
+
+local active_middle_segment = {
 	FileNameBlock,
-	Align,
+}
+
+local active_right_segment = {
+	Diagnostics,
+	Space,
+	Space,
 	LSPInfo,
 	Space,
 	Ruler,
-	Space,
 	ScrollBar,
-	Space,
-	DecorBlock,
 }
 
-local InactiveStatusLine = {
-	condition = conditions.is_not_active,
+local DefaultStatusLine = {
+	heirline_utils.surround({ "", utils.decorations.right_semicircle }, colors.bg, active_left_segment),
 	Align,
-	FileNameBlock,
+	active_middle_segment,
 	Align,
+	heirline_utils.surround({ utils.decorations.left_semicircle }, colors.bg, active_right_segment),
 }
 
 local TerminalStatusline = {
-
 	condition = function()
 		return conditions.buffer_matches({ buftype = { "terminal" } })
 	end,
@@ -402,6 +389,14 @@ local TerminalStatusline = {
 	-- Quickly add a condition to the ViMode to only show it when buffer is active!
 	{ condition = conditions.is_active, VimModes, Space },
 	TerminalName,
+}
+
+local AlphaStatusLine = {
+	condition = function()
+		return conditions.buffer_matches({
+			filetype = { "alpha" },
+		})
+	end,
 }
 
 local SpecialStatusline = {
@@ -417,14 +412,6 @@ local SpecialStatusline = {
 	Space,
 	HelpFileName,
 	Align,
-}
-
-local AlphaStatusLine = {
-	condition = function()
-		return conditions.buffer_matches({
-			filetype = { "alpha" },
-		})
-	end,
 }
 
 local StatusLines = {
@@ -454,8 +441,6 @@ local StatusLines = {
 	hl = function()
 		if conditions.is_active() then
 			return "StatusLine"
-		elseif conditions.buffer_matches({ filetype = "Alpha" }) then
-			return "debugPC"
 		else
 			return "debugPC"
 		end
@@ -465,7 +450,6 @@ local StatusLines = {
 	AlphaStatusLine,
 	SpecialStatusline,
 	TerminalStatusline,
-	InactiveStatusLine,
 	DefaultStatusLine,
 }
 
