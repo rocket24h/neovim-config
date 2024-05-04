@@ -397,6 +397,7 @@ local AlphaStatusLine = {
 			filetype = { "alpha" },
 		})
 	end,
+	provider = "",
 }
 
 local SpecialStatusline = {
