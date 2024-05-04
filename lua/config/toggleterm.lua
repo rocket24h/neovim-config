@@ -1,6 +1,6 @@
 require("toggleterm").setup({
 	size = 15,
-	shell = vim.o.shell,
+	shell = "pwsh",
 	direction = "float",
 	open_mapping = [[<c-\>]],
 	shade_filetypes = {},
